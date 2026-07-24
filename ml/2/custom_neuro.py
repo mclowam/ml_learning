@@ -5,16 +5,16 @@ from tqdm import tqdm
 
 
 class Net(nn.Module):
-    def __init__(self, dim=1):
+    def __init__(self, dim=1, neuros=105):
         super(Net, self).__init__()
 
-        self.fc1 = nn.Linear(dim, 105)
+        self.fc1 = nn.Linear(dim, neuros)
         self.tanh1 = nn.Tanh()
 
-        self.fc2 = nn.Linear(105, 105)
+        self.fc2 = nn.Linear(neuros, neuros)
         self.tanh2 = nn.Tanh()
 
-        self.fc3 = nn.Linear(105, 1)
+        self.fc3 = nn.Linear(neuros, 1)
         self.tanh3 = nn.Tanh()
 
     def forward(self, x):
@@ -56,7 +56,7 @@ Y = torch.cos(X)
 X_test = torch.linspace(-6, 6, 1000)
 Y_test = torch.cos(X_test)
 
-for i in range(100):
+for i in range(200):
     print(i)
     NN = train(NN, X, Y, criterion, optimizer, 30)
 
