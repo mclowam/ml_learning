@@ -44,3 +44,7 @@ out/
 postgres_data/
 docker/pgdata/
 minio_data/
+
+mnist_data/
+cifar10_data/
+*_data/

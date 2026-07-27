@@ -25,7 +25,12 @@ class SimpleNet(nn.Module):
     def __init__(self):
         super().__init__()
         self.flatten = torch.nn.Flatten()
+
         self.fc_in = nn.Linear(28*28, 256)
+        self.dop1 = nn.Linear(256, 256)
+        self.dop2 = nn.Linear(256, 256)
+        self.dop3 = nn.Linear(256, 256)
+
         self.fc_out = nn.Linear(256, 10)
 
     def forward(self, x):
@@ -34,6 +39,10 @@ class SimpleNet(nn.Module):
 
         #умножение матрицы весов 1 слоя и применения функции активации
         x = F.relu(self.fc_in(x))
+
+        x = self.dop1(x)
+        x = self.dop2(x)
+        x = self.dop3(x)
 
         # умножение матрицы весов 2 слоя и применения функции активации
         x = self.fc_out(x)
@@ -114,15 +123,13 @@ learning_rate = 1e-3
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 
-model, data = train(model, loss_fn, optimizer, n_epoch=3)
+model, data = train(model, loss_fn, optimizer, n_epoch=1)
 
 
 
-# 1. Проверка точности на тестовой выборке
 test_acc, test_loss = evaluate(model, test_loader, loss_fn)
 print(f"\nTest Acc: {test_acc:.4f} | Test Loss: {test_loss:.4f}")
 
-# 2. Построение графиков Loss и Accuracy
 fig, axs = plt.subplots(1, 2, figsize=(12, 4))
 
 axs[0].plot(data["loss_train"], label="Train Loss")
@@ -139,7 +146,6 @@ axs[1].legend()
 
 plt.show()
 
-# 3. Визуализация предсказаний на реальных изображениях
 model.eval()
 X_batch, y_batch = next(iter(test_loader))
 
