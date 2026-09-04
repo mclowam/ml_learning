@@ -65,11 +65,6 @@ class ConvNet(nn.Module):
 
         self.fc1 = nn.Linear(13 * 13 * 9, 128)
 
-        self.dop1 = nn.Linear(128, 128)
-        self.dop2 = nn.Linear(128, 128)
-        self.dop3 = nn.Linear(128, 128)
-        self.dop4 = nn.Linear(128, 128)
-        self.dop5 = nn.Linear(128, 128)
 
         self.fc2 = nn.Linear(128, 10)
 
@@ -82,12 +77,6 @@ class ConvNet(nn.Module):
         x = self.flatten(x)
 
         x = F.relu(self.fc1(x))
-
-        x = self.dop1(x)
-        x = self.dop2(x)
-        x = self.dop3(x)
-        x = self.dop4(x)
-        x = self.dop5(x)
 
         x = self.fc2(x)
 

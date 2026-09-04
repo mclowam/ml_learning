@@ -48,3 +48,4 @@ minio_data/
 mnist_data/
 cifar10_data/
 *_data/
+archive/
