@@ -88,7 +88,7 @@ def train(model, loss_fn, optimizer, n_epoch=5):
     return model
 
 
-model = train(model, loss_fn, optimizer, n_epoch=5)
+model = train(model, loss_fn, optimizer, n_epoch=3)
 
 test_accuracy, test_loss = evaluate(model, test_loader, loss_fn)
 print(f"Test Accuracy: {test_accuracy:.4f}")
