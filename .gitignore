@@ -49,3 +49,5 @@ mnist_data/
 cifar10_data/
 *_data/
 archive/
+
+quora.txt
