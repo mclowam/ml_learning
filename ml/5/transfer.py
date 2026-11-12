@@ -13,20 +13,20 @@ resnet_transforms = transforms.Compose([
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
 
-train_data = datasets.ImageFolder('./archive/train', transform=resnet_transforms)
-val_data = datasets.ImageFolder('./archive/valid', transform=resnet_transforms)
-test_data = datasets.ImageFolder('./archive/test', transform=resnet_transforms)
+train_data = datasets.ImageFolder('./archive/archive/train', transform=resnet_transforms)
+val_data = datasets.ImageFolder('./archive/archive/valid', transform=resnet_transforms)
+test_data = datasets.ImageFolder('./archive/archive/test', transform=resnet_transforms)
 
 classes = train_data.classes
 num_classes = len(classes)
 
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=64, shuffle=True)
 val_loader = torch.utils.data.DataLoader(val_data, batch_size=64, shuffle=False)
-test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=False)
+test_loader = torch.utils.data.DataLoader(test_data, batch_size=64, shuffle=True)
 
 
 def create_model(num_freeze_layers, num_out_classes):
-    model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
+    model = models.resnet18(weights=models.ResNet18_Weights)
     model.fc = nn.Linear(model.fc.in_features, num_out_classes)
 
     for i, layer in enumerate(model.children()):
@@ -38,6 +38,7 @@ def create_model(num_freeze_layers, num_out_classes):
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(device)
 model = create_model(num_freeze_layers=9, num_out_classes=num_classes).to(device)
 
 loss_fn = nn.CrossEntropyLoss()
