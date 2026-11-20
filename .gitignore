@@ -51,3 +51,6 @@ cifar10_data/
 archive/
 
 quora.txt
+
+sentiment_dataset.csv
+sentiment_model.pt
